@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    public float health;
+    public int health;
     Material instancedMaterial;
     public bool isDead { get; private set; }
     public CompositeState isInvicibleState = new CompositeState();
@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
         instancedMaterial = GetComponentInChildren<SpriteRenderer>().material;
     }
 
-    public void Hit(float damages)
+    public void Hit(int damages)
     {
         if (isDead)
             return;
@@ -37,17 +37,17 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
-        GetComponent<Collider2D>().enabled = false;
+        GetComponentInChildren<Collider2D>().enabled = false;
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         body.velocity = Vector2.zero;
         body.isKinematic = true;
         isDead = true;
         onDie.Invoke();
 
-        Destroy(gameObject, 3);
+       // Destroy(gameObject, 3);
     }
 
-    public void Heal(float amount)
+    public void Heal(int amount)
     {
         health += amount;
         onHeal.Invoke();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class Weapon : MonoBehaviour
     IAnimable animable;
     GameObject parentCharacter;
     Animator anim;
+    Health health;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,14 @@ public class Weapon : MonoBehaviour
 
         anim = GetComponentInChildren<Animator>();
         anim.speed = 1f / 6f;
+
+        health = GetComponentInParent<Health>();
+        health.onDie.AddListener(OnDie);
+    }
+
+    private void OnDie()
+    {
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -88,6 +98,9 @@ public class Weapon : MonoBehaviour
 
     void Fire()
     {
+        if (health.isDead)
+            return;
+
         Invoke("DelayedGenerateProjectile", 0.05f);
 
         anim.SetTrigger("Fire");
