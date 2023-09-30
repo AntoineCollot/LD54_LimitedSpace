@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterAnimations : MonoBehaviour
 {
@@ -33,11 +34,29 @@ public class CharacterAnimations : MonoBehaviour
 
     void LateUpdate()
     {
-        switch (animable.AnimationDirection)
+        //DirectionByMovement();
+        DirectionByCursor();
+
+        anim.SetFloat(directionHash, direction);
+        spriteRenderer.flipX = flipX;
+        anim.SetFloat(moveSpeedHash, animable.AnimationMoveSpeed);
+    }
+
+    void DirectionByCursor()
+    {
+        switch (CharacterLookDirection.Instance.LookDirectionVertical)
         {
             case Direction.Up:
                 direction = 1;
                 break;
+            case Direction.Down:
+            default:
+                direction = 0;
+                break;
+        }
+
+        switch (animable.AnimationDirection)
+        {
             case Direction.Right:
             default:
                 flipX = false;
@@ -45,13 +64,32 @@ public class CharacterAnimations : MonoBehaviour
             case Direction.Left:
                 flipX = true;
                 break;
+        }
+    }
+
+    void DirectionByMovement()
+    {
+        switch (animable.AnimationDirection)
+        {
+            case Direction.Up:
+                direction = 1;
+                break;
+            case Direction.Right:
+            default:
+                //Inverse direction if we should flip
+                if (flipX)
+                    direction = 1 - direction;
+                flipX = false;
+                break;
+            case Direction.Left:
+                //Inverse direction if we should flip
+                if (!flipX)
+                    direction = 1 - direction;
+                flipX = true;
+                break;
             case Direction.Down:
                 direction = 0;
                 break;
         }
-        anim.SetFloat(directionHash, direction);
-        spriteRenderer.flipX = flipX;
-
-        anim.SetFloat(moveSpeedHash, animable.AnimationMoveSpeed);
     }
 }
