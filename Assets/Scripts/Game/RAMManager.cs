@@ -15,6 +15,7 @@ public class RAMManager : MonoBehaviour
     public event OnRAMModeEventHandler onRAMModeEnabled;
 
     int availableRAMCount = 0;
+    public int RAMCount => availableRAMCount;
     public ScriptableRAMData ramData;
     InputMap inputMap;
 

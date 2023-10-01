@@ -10025,7 +10025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c864310883c7c2d4d9be40ec9151049a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 4
+  unkillable: 0
   applyOnHitFlashes: 1
   onDie:
     m_PersistentCalls:
@@ -10048,7 +10049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5635d2ba8d7cb4880c645f3ffd8fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   maxSpeedChange: 100
   targetBehaviour: 0
   attackTriggerRange: 0.7
@@ -10071,7 +10072,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  health: {fileID: 0}
+  trackingBehaviour: 0
+  startTrackingRange: 10
 --- !u!1 &6155908716764052098
 GameObject:
   m_ObjectHideFlags: 0

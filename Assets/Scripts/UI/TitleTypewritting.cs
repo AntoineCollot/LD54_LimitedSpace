@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class TitleTypewritting : MonoBehaviour
 {
+    public float startDelay = 1;
     public float timePerChar = 0.1f;
+    public bool erase = true;
     public float displayDuraction = 2;
 
     private void Start()
@@ -18,7 +20,7 @@ public class TitleTypewritting : MonoBehaviour
         TextMeshProUGUI text = GetComponent<TextMeshProUGUI>();
         text.maxVisibleCharacters = 0;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(startDelay);
 
         for (int i = 1; i <= text.text.Length; i++)
         {
@@ -26,6 +28,9 @@ public class TitleTypewritting : MonoBehaviour
 
             yield return new WaitForSeconds(timePerChar);
         }
+
+        if(!erase)
+            yield break;
 
         yield return new WaitForSeconds(displayDuraction);
 

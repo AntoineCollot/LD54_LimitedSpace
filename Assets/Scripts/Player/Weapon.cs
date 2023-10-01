@@ -18,6 +18,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] Projectile projectile;
     [SerializeField] Transform fireOrigin;
     InputMap inputMap;
+    public float fireInterval;
+    float lastFireTime;
+    bool CanFire => Time.time>= lastFireTime + fireInterval;
 
     IAnimable animable;
     GameObject parentCharacter;
@@ -32,7 +35,7 @@ public class Weapon : MonoBehaviour
 
         inputMap = new InputMap();
         inputMap.Enable();
-        inputMap.Gameplay.Fire.performed += OnFire;
+        //inputMap.Gameplay.Fire.performed += OnFire;
 
         parentCharacter = GetComponentInParent<PlayerMovement>().gameObject;
 
@@ -55,6 +58,8 @@ public class Weapon : MonoBehaviour
             return;
         RotateWeapon();
         UpdateSprite();
+        if (inputMap.Gameplay.Fire.IsPressed())
+            Fire();
     }
 
     void RotateWeapon()
@@ -100,14 +105,14 @@ public class Weapon : MonoBehaviour
 
     void Fire()
     {
-        if (health.isDead)
+        if (!CanFire || health.isDead)
             return;
 
         if (RAMManager.Instance.isInRAMMode)
             return;
 
         Invoke("DelayedGenerateProjectile", 0.05f);
-
+        lastFireTime = Time.time;
         anim.SetTrigger("Fire");
     }
 

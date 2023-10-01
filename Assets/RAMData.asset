@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ramGroups:
   - type: 0
-    state: 2
+    state: 0
     materials:
     - {fileID: 2100000, guid: 6e9eceb9369b52b4db73b1758905605f, type: 2}
     - {fileID: 2100000, guid: bdbfcc0653bd7974db14fec60b7817a5, type: 2}
@@ -26,7 +26,7 @@ MonoBehaviour:
     state: 0
     materials: []
   - type: 3
-    state: 2
+    state: 0
     materials: []
   - type: 4
     state: 0
@@ -39,6 +39,6 @@ MonoBehaviour:
     materials:
     - {fileID: 2100000, guid: 9ebcd8e06031fc046ad909a10607573c, type: 2}
   - type: 7
-    state: 2
+    state: 0
     materials:
     - {fileID: 2100000, guid: 65245779e7520234fb08337216ba3818, type: 2}

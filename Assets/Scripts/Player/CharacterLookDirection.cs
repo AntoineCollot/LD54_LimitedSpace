@@ -7,6 +7,7 @@ public class CharacterLookDirection : MonoBehaviour
 {
     public Transform pivot;
     public float lookAngle { get; private set; }
+    public Vector2 cursorWorldPos { get; private set; }
     public Direction LookDirectionVertical
     {
         get
@@ -29,7 +30,6 @@ public class CharacterLookDirection : MonoBehaviour
         }
     }
 
-
     public static CharacterLookDirection Instance;
 
     private void Awake()
@@ -41,6 +41,7 @@ public class CharacterLookDirection : MonoBehaviour
     void Update()
     {
         LookAtCursor();
+        CastCursorOnPlane();
     }
 
     void LookAtCursor()
@@ -53,5 +54,15 @@ public class CharacterLookDirection : MonoBehaviour
 
         //Angle
         lookAngle = Vector2.SignedAngle(Vector2.right, mousePos - pivotScreenPos);
+    }
+
+    void CastCursorOnPlane()
+    {
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (plane.Raycast(ray,out float distance))
+        {
+            cursorWorldPos = ray.GetPoint(distance);
+        }
     }
 }

@@ -4,25 +4,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIRAMCount : MonoBehaviour
+public class UIRAMTuto : MonoBehaviour
 {
-    TextMeshProUGUI text;
-    public Button button;
+    public GameObject target;
 
     // Start is called before the first frame update
     void Start()
     {
         RAMManager.Instance.onRAMCountChanged += OnRAMCountChanged;
-        text = GetComponentInChildren<TextMeshProUGUI>();
-        OnRAMCountChanged(RAMManager.Instance.RAMCount);
     }
 
     private void OnRAMCountChanged(int newRAMCount)
     {
-        text.text = $":0x0{newRAMCount}";
-
-        button.interactable = newRAMCount > 0;
+        if(newRAMCount>0)
+        {
+            target.SetActive(true);
+            RAMManager.Instance.onRAMCountChanged -= OnRAMCountChanged;
+        }
     }
-
-
 }
