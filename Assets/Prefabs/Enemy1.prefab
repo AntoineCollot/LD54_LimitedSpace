@@ -753,7 +753,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.66
+      value: 0.8
       mode: 0
       spread: 0
       speed:
@@ -982,7 +982,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 13
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -9984,7 +9984,7 @@ Transform:
   - {fileID: 2328927133721805143}
   - {fileID: 1494843843112015627}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &54549213033478257
 Rigidbody2D:
@@ -10052,8 +10052,8 @@ MonoBehaviour:
   moveSpeed: 2.5
   maxSpeedChange: 100
   targetBehaviour: 0
-  attackTriggerRange: 0.7
-  attackRadius: 1
+  attackTriggerRange: 1
+  attackRadius: 1.5
   minAttackInterval: 3
   attackAnticipationDuration: 0.35
   attackDuration: 1.5
@@ -10141,7 +10141,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 1
 --- !u!114 &6815257758358583518
 MonoBehaviour:
   m_ObjectHideFlags: 0

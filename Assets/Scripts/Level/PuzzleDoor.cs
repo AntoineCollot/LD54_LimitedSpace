@@ -34,14 +34,16 @@ public class PuzzleDoor : Door
             return;
 
         state = State.Opening;
-        anim.SetBool("IsOpen", true);
-        SFXManager.PlaySound(GlobalSFX.DoorOpen);
-
         StartCoroutine(OpenAnim());
     }
 
     IEnumerator OpenAnim()
     {
+        yield return new WaitForSeconds(1.5f);
+
+        anim.SetBool("IsOpen", true);
+        SFXManager.PlaySound(GlobalSFX.DoorOpen);
+
         yield return new WaitForSeconds(openingTime);
 
         state = State.Open;

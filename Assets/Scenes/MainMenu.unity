@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnGroups:
-  - spawnTime: 7
+  - spawnTime: 7.5
     toSpawn:
     - {fileID: 99512795}
 --- !u!1 &477148679
@@ -1569,7 +1569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e0ddae1f5582c4bb7a446e4746057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 6
+  startDelay: 4.5
   timePerChar: 0.02
   erase: 0
   displayDuraction: 2

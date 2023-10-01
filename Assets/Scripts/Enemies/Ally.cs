@@ -94,6 +94,7 @@ public class Ally : MonoBehaviour
         anim.SetBool("IsDead", true);
         ExplosionProvider.Instance.SpawnEnemyDeath(transform.position);
         SFXManager.PlaySound(GlobalSFX.EnemyKilled);
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -3; 
     }
 
 #if UNITY_EDITOR
