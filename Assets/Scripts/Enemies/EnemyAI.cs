@@ -9,30 +9,36 @@ public class EnemyAI : MonoBehaviour
     [Header("Pathfinding")]
     public float moveSpeed = 3;
     public float maxSpeedChange = 100;
-    Vector3 targetPosition;
-    Vector2 desiredVelocity;
-    NavMeshPath path;
-    Rigidbody2D body;
+    protected Vector3 targetPosition;
+    protected Vector2 desiredVelocity;
+    protected NavMeshPath path;
+    protected  Rigidbody2D body;
     public enum TargetBehaviour { AimAtPlayer, AimAtMaxRange }
     public TargetBehaviour targetBehaviour;
-    Vector3[] corners;
+    protected Vector3[] corners;
 
-    [Header("Behaviour")]
+    [Header("Attack")]
     public float attackTriggerRange;
     public float attackRadius;
     public float minAttackInterval;
-    float lastAttackTime;
-    bool isAttacking;
+    protected float lastAttackTime;
+    protected bool isAttacking;
     public bool IsWalking => desiredVelocity.magnitude > 0.1f;
     public float attackAnticipationDuration = 0.2f;
     public float attackDuration = 1;
     public UnityEvent onAttack = new UnityEvent();
-    bool canHitAllies = false;
+    protected bool canHitAllies = false;
 
-    public Health health;
+    [Header("Tracking")]
+    public TrackingBehaviour trackingBehaviour;
+    public enum TrackingBehaviour { Always, Range, LineOfSight}
+    public float startTrackingRange = 10;
+    public bool isTracking { get;private set; }
+
+    Health health;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         path = new NavMeshPath();
         corners = new Vector3[10];
@@ -43,8 +49,14 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
+        ProcessTracking();
+
+        //only start moving if tracking started
+        if (!isTracking)
+            return;
+
         //Move into range
         switch (targetBehaviour)
         {
@@ -76,12 +88,39 @@ public class EnemyAI : MonoBehaviour
         body.velocity = velocity;
     }
 
-    private void OnDie()
+    protected void ProcessTracking()
+    {
+        if (isTracking)
+            return;
+        switch (trackingBehaviour)
+        {
+            case TrackingBehaviour.Always:
+            default:
+                isTracking = true;
+                break;
+            case TrackingBehaviour.Range:
+                if (Vector2.Distance(PlayerState.Instance.CenterOfMass, transform.position)<startTrackingRange)
+                    isTracking = true;
+                break;
+            case TrackingBehaviour.LineOfSight:
+                LayerMask mask = 1 << LayerMask.NameToLayer("Level") | 1 << LayerMask.NameToLayer("Player");
+                Vector2 dir = PlayerState.Instance.CenterOfMass - transform.position;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 100, mask);
+                if(hit.collider != null)
+                {
+                    if(hit.collider.CompareTag("Player"))
+                        isTracking = true;
+                }
+                break;
+        }
+    }
+
+    protected void OnDie()
     {
         enabled = false;
     }
 
-    void ComputeDesiredVelocity()
+    protected void ComputeDesiredVelocity()
     {
         if (isAttacking)
         {
@@ -116,12 +155,12 @@ public class EnemyAI : MonoBehaviour
         return hit.collider == null;
     }
 
-    void UpdatePath()
+    protected void UpdatePath()
     {
         NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path);
     }
 
-    Vector2 GetMoveAlongPath()
+    protected Vector2 GetMoveAlongPath()
     {
         path.GetCornersNonAlloc(corners);
         Vector2 toNextCorner = corners[1] - transform.position;
@@ -130,12 +169,17 @@ public class EnemyAI : MonoBehaviour
         return toNextCorner;
     }
 
-    void Attack()
+    protected void Attack()
     {
         if (isAttacking || Time.time < lastAttackTime+minAttackInterval)
             return;
 
         lastAttackTime = Time.time;
+        CustomAttack();
+    }
+
+    protected virtual void CustomAttack()
+    {
         StartCoroutine(AttackC());
     }
 
@@ -158,8 +202,6 @@ public class EnemyAI : MonoBehaviour
 
         yield return new WaitForSeconds(attackDuration- attackAnticipationDuration);
 
-
-
         isAttacking = false;
     }
 
@@ -172,6 +214,9 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackTriggerRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.yellow;
+        if(trackingBehaviour == TrackingBehaviour.Range)
+            Gizmos.DrawWireSphere(transform.position, startTrackingRange);
 
         //Handles.Label(transform.position + Vector3.down * 0.3f, state.ToString());
 

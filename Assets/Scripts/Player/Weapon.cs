@@ -51,6 +51,8 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (RAMManager.Instance.isInRAMMode)
+            return;
         RotateWeapon();
         UpdateSprite();
     }
@@ -99,6 +101,9 @@ public class Weapon : MonoBehaviour
     void Fire()
     {
         if (health.isDead)
+            return;
+
+        if (RAMManager.Instance.isInRAMMode)
             return;
 
         Invoke("DelayedGenerateProjectile", 0.05f);

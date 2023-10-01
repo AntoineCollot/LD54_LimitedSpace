@@ -11,6 +11,7 @@ Shader "Custom/SpriteRAM"
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         [PerRendererData] _AlphaTex ("External Alpha", 2D) = "white" {}
         [PerRendererData] _EnableExternalAlpha ("Enable External Alpha", Float) = 0
+		_LockedColor ("Locked Color", Color)=(1,1,1,1)
 		_RAMState ("RAM State", Integer) = 0
     }
 
@@ -43,21 +44,22 @@ Shader "Custom/SpriteRAM"
 
 		
 		int _RAMState;
+		fixed4 _LockedColor;
+		half _UnscaledTime;
 		
 		fixed4 SpriteRAMFrag(v2f IN) : SV_Target
 		{
 			fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
-			//c.rgb = c.rgb * step(_HitTime + _HurtFlashDuration,_Time.y) +  step(_Time.y,_HitTime + _HurtFlashDuration);
 			c.rgb *= c.a;
 			
 			//Hover
-			half t = (sin(_Time.y * 8) + 2) * 0.5;
+			half t = (sin(_UnscaledTime * 8) + 2) * 0.5;
 			fixed4 hovCol0 = fixed4(0.910063, 0.3254717,1,1);
 			fixed4 hovCol1 = fixed4(0.9341931, 0.5,1,1);
 			c = c = c * step(0.5,_RAMState-1) + lerp(hovCol0, hovCol1,t) * step(_RAMState-1,0.5);
 			
 			//Locked
-			c = c * step(0.5,_RAMState) + fixed4(1,1,1,1) * step(_RAMState,0.5);
+			c = c * step(0.5,_RAMState) + _LockedColor * step(_RAMState,0.5);
 			
 			return c;
 		}

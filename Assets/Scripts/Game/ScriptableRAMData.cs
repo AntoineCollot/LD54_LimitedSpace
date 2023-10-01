@@ -8,4 +8,9 @@ using UnityEngine;
 public class ScriptableRAMData : ScriptableObject
 {
     public RAMGroup[] ramGroups;
+
+    public RAMGroup GetRAMGroup(RAMType type)
+    {
+        return ramGroups.First(r => r.type == type);
+    }
 }
