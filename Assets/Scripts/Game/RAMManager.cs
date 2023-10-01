@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System;
 
 public class RAMManager : MonoBehaviour
 {
@@ -54,7 +55,14 @@ public class RAMManager : MonoBehaviour
             }
         }
 
+        GameManager.Instance.onGameOver.AddListener(OnGameOver);
+
         InitMaterials();
+    }
+
+    private void OnGameOver()
+    {
+        ExitRAMMode();
     }
 
     private void Update()
@@ -64,7 +72,6 @@ public class RAMManager : MonoBehaviour
             ProcessRAMMode(inputMap.Gameplay.Fire.WasPressedThisFrame());
             Shader.SetGlobalFloat("_UnscaledTime", Time.unscaledTime);
         }
-
     }
 
     void InitMaterials()
@@ -196,7 +203,7 @@ public class RAMManager : MonoBehaviour
 
     public void EnterRAMMode()
     {
-        if (RAMCount <= 0 || isInRAMMode)
+        if (RAMCount <= 0 || isInRAMMode || GameManager.Instance.gameIsOver)
             return;
         isInRAMMode = true;
         Time.timeScale = 0;

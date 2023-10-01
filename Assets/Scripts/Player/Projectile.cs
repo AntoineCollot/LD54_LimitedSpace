@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
         this.owner = owner;
         this.ignoreLayer = ignoreLayer;
 
-        transform.rotation = Quaternion.Euler(0, 0, CharacterLookDirection.Instance.lookAngle);
+        transform.rotation = Quaternion.Euler(0, 0, -Vector2.SignedAngle(direction,Vector2.right));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -24,7 +24,7 @@ MonoBehaviour:
     materials:
     - {fileID: 2100000, guid: 7ebcfee87ee59014da92aa51d934a1a0, type: 2}
   - type: 2
-    state: 2
+    state: 0
     materials: []
   - type: 3
     state: 0
@@ -33,10 +33,11 @@ MonoBehaviour:
     state: 0
     materials: []
   - type: 5
-    state: 2
-    materials: []
+    state: 0
+    materials:
+    - {fileID: 2100000, guid: 99b36958fec61d04bbf892d5530100af, type: 2}
   - type: 6
-    state: 2
+    state: 0
     materials:
     - {fileID: 2100000, guid: 9ebcd8e06031fc046ad909a10607573c, type: 2}
   - type: 7

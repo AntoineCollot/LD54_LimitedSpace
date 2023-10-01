@@ -80,6 +80,7 @@ public class Ally : MonoBehaviour
             else
                 text.text = EncodeText(baseText);
 
+            text.maxVisibleCharacters = 500;
             currentTranslate = ShouldTranslate;
         }
     }

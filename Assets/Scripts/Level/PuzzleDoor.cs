@@ -11,6 +11,7 @@ public class PuzzleDoor : Door
 
     Animator anim;
     public float openingTime = 1;
+    public float openingDelay = 1.3f;
 
     protected override void Start()
     {
@@ -39,7 +40,7 @@ public class PuzzleDoor : Door
 
     IEnumerator OpenAnim()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(openingDelay);
 
         anim.SetBool("IsOpen", true);
         SFXManager.PlaySound(GlobalSFX.DoorOpen);

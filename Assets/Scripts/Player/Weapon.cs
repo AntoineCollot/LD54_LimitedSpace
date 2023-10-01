@@ -22,7 +22,6 @@ public class Weapon : MonoBehaviour
     float lastFireTime;
     bool CanFire => Time.time>= lastFireTime + fireInterval;
 
-    IAnimable animable;
     GameObject parentCharacter;
     Animator anim;
     Health health;
@@ -31,7 +30,6 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animable = GetComponentInParent<IAnimable>();
 
         inputMap = new InputMap();
         inputMap.Enable();
@@ -44,6 +42,15 @@ public class Weapon : MonoBehaviour
 
         health = GetComponentInParent<Health>();
         health.onDie.AddListener(OnDie);
+
+        RAMManager.Instance.onRAMModeEnabled += OnRAMModeEnabled;
+    }
+
+    private void OnRAMModeEnabled(bool isOn)
+    {
+        //freeze ability to shoot right after ram mode
+        if(isOn)
+            lastFireTime =Time.time;
     }
 
     private void OnDie()

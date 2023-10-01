@@ -10,12 +10,12 @@ public class TitleTypewritting : MonoBehaviour
     public bool erase = true;
     public float displayDuraction = 2;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         StartCoroutine(Typewritting());
     }
 
-    IEnumerator Typewritting()
+    protected IEnumerator Typewritting()
     {
         TextMeshProUGUI text = GetComponent<TextMeshProUGUI>();
         text.maxVisibleCharacters = 0;

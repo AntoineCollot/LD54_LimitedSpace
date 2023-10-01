@@ -78,7 +78,7 @@ Shader "Custom/SpriteRAMHurt"
 			half t = (sin(_UnscaledTime * 8) + 2) * 0.5;
 			fixed4 hovCol0 = fixed4(0.910063, 0.3254717,1,1);
 			fixed4 hovCol1 = fixed4(0.9341931, 0.5,1,1);
-			c = c = c * step(0.5,_RAMState-1) + lerp(hovCol0, hovCol1,t) * step(_RAMState-1,0.5);
+			c = c * step(0.5,_RAMState-1) + lerp(hovCol0, hovCol1,t) * step(_RAMState-1,0.5);
 			
 			//Locked
 			c = c * step(0.5,_RAMState) + _LockedColor * step(_RAMState,0.5);

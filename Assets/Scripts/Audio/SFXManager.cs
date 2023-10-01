@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -59,6 +60,14 @@ public class SFXManager : MonoBehaviour
         sfxSource.mute = muteSFX;
         if(musicSource!=null)
             musicSource.mute = muteMusic;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
+    {
+        if (!Instance.musicSource.isPlaying && scene.name != "MainMenu")
+            Instance.musicSource.Play();
     }
 
     public static void MuteSFX(bool value)

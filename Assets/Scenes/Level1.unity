@@ -2984,6 +2984,85 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4061566452228660070}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &59723856
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 357775875}
+    m_Modifications:
+    - target: {fileID: 3232792210526375582, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWalkSmoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df, type: 3}
+--- !u!4 &59723857 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4655152744234362135, guid: 5d0ed1b59887dc44e8bb3fa57b4dd1df,
+    type: 3}
+  m_PrefabInstance: {fileID: 59723856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &123401153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,6 +3837,7 @@ Transform:
   - {fileID: 126027267}
   - {fileID: 1460400980}
   - {fileID: 1764529688}
+  - {fileID: 59723857}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3818,6 +3898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ramData: {fileID: 11400000, guid: 7465564d17f85ea4180b9ae8b45421e6, type: 2}
+  unlockEverything: 0
 --- !u!4 &359781038
 Transform:
   m_ObjectHideFlags: 0
@@ -5429,8 +5510,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -162}
-  m_SizeDelta: {x: 624.2715, y: 138.7136}
+  m_AnchoredPosition: {x: 60, y: -215.97388}
+  m_SizeDelta: {x: 624.2715, y: 246.6614}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1576987485
 MonoBehaviour:
@@ -5477,7 +5558,9 @@ MonoBehaviour:
 
     controls>move(arrows)
 
-    controls>fire(left_mouse)'
+    controls>fire(left_mouse)
+
+    controls>restart(r)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: db1350dc338dab448a8a4dfa4aef1a4d, type: 2}
   m_sharedMaterial: {fileID: 5833000075464488437, guid: db1350dc338dab448a8a4dfa4aef1a4d,
