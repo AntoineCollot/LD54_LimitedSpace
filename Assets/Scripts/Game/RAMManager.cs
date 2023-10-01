@@ -14,14 +14,17 @@ public class RAMManager : MonoBehaviour
     public delegate void OnRAMModeEventHandler(bool isOn);
     public event OnRAMModeEventHandler onRAMModeEnabled;
 
-    int availableRAMCount = 0;
-    public int RAMCount => availableRAMCount;
+    public int RAMCount => ramData.availableRAMCount;
     public ScriptableRAMData ramData;
     InputMap inputMap;
 
     //RAM Mode
     public bool isInRAMMode { get; private set; }
     RAMGroup hoveredGroup;
+
+    //Reset level
+    List<RAMGroup> unlockedGroupOfLastLevel = new List<RAMGroup>();
+    int availableRAMCountAtLevelStart;
 
     public static RAMManager Instance;
 
@@ -38,7 +41,9 @@ public class RAMManager : MonoBehaviour
 
         Time.timeScale = 1;
 
-        Init();
+        availableRAMCountAtLevelStart = ramData.availableRAMCount;
+
+        InitMaterials();
     }
 
     private void Update()
@@ -51,7 +56,7 @@ public class RAMManager : MonoBehaviour
 
     }
 
-    void Init()
+    void InitMaterials()
     {
         foreach (RAMGroup group in ramData.ramGroups)
         {
@@ -94,9 +99,11 @@ public class RAMManager : MonoBehaviour
             //Process click
             if(useRAM)
             {
-                SetState(group, RAMState.Unlocked);
-                ExitRAMMode();
-                return;
+                if (UseRAM(group))
+                {
+                    ExitRAMMode();
+                    return;
+                }
             }
             //Process hover
             if (hoveredGroup == group)
@@ -143,19 +150,21 @@ public class RAMManager : MonoBehaviour
         if (!group.SetState(state, allowDelocking))
             return false;
 
+        if(state==RAMState.Unlocked)
+            unlockedGroupOfLastLevel.Add(group);
         onRAMStateChanged.Invoke(group.type, state);
         return true;
     }
 
     public void FindRAM()
     {
-        availableRAMCount++;
-        onRAMCountChanged.Invoke(availableRAMCount);
+        ramData.availableRAMCount++;
+        onRAMCountChanged.Invoke(RAMCount);
     }
 
     public void EnterRAMMode()
     {
-        if (availableRAMCount <= 0 || isInRAMMode)
+        if (RAMCount <= 0 || isInRAMMode)
             return;
         isInRAMMode = true;
         Time.timeScale = 0;
@@ -173,16 +182,20 @@ public class RAMManager : MonoBehaviour
         ResetAllHoveredStates();
     }
 
-    public void UseRAM(RAMType type)
+    public bool UseRAM(RAMGroup group)
     {
-        if (availableRAMCount <= 0)
-            return;
+        if (RAMCount <= 0)
+            return false;
 
-        if (SetState(type, RAMState.Unlocked))
+        if (SetState(group.type, RAMState.Unlocked))
         {
-            availableRAMCount--;
-            onRAMCountChanged.Invoke(availableRAMCount);
+            ramData.availableRAMCount--;
+            onRAMCountChanged.Invoke(RAMCount);
+
+            return true;
         }
+
+        return false;
     }
 
     void ResetAllHoveredStates()
@@ -192,6 +205,18 @@ public class RAMManager : MonoBehaviour
             //Set all states as locked, as by default unlocked state doesn't allow to be changed
             SetState(group, RAMState.Locked);
         }
+    }
+
+    public void ResetRAMOfLastLevel()
+    {
+        //reset RAM count
+        ramData.availableRAMCount = availableRAMCountAtLevelStart;
+        //Reset states
+        foreach(RAMGroup group in unlockedGroupOfLastLevel)
+        {
+            group.SetState(RAMState.Locked, true);
+        }
+        unlockedGroupOfLastLevel.Clear();
     }
 
 #if UNITY_EDITOR

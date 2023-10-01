@@ -10049,7 +10049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5635d2ba8d7cb4880c645f3ffd8fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 2.5
   maxSpeedChange: 100
   targetBehaviour: 0
   attackTriggerRange: 0.7

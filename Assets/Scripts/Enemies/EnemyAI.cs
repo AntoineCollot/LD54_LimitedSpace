@@ -47,6 +47,10 @@ public class EnemyAI : MonoBehaviour
         health.onDie.AddListener(OnDie);
         body = GetComponent<Rigidbody2D>();
     }
+    private void OnEnable()
+    {
+        lastAttackTime = Time.time;
+    }
 
     // Update is called once per frame
     protected void Update()

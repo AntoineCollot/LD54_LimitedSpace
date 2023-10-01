@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea54a8e708908c540a416db404d2b90a, type: 3}
   m_Name: RAMData
   m_EditorClassIdentifier: 
+  availableRAMCount: 0
   ramGroups:
   - type: 0
     state: 0

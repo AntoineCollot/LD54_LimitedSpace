@@ -1711,6 +1711,7 @@ MonoBehaviour:
   projectile: {fileID: 3235052376054767098, guid: 1ddc697b8dda4b045b144d5ddb98f62f,
     type: 3}
   fireOrigin: {fileID: 1506223347}
+  fireInterval: 0
 --- !u!1 &653597849
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,7 +2509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e0ddae1f5582c4bb7a446e4746057c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 1
   timePerChar: 0.075
+  erase: 1
   displayDuraction: 2
 --- !u!1 &1374646261
 GameObject:

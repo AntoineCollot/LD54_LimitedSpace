@@ -1286,9 +1286,9 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
-  unkillable: 1
+  unkillable: 0
   applyOnHitFlashes: 1
   onDie:
     m_PersistentCalls:
@@ -1594,7 +1594,19 @@ MonoBehaviour:
       m_Calls: []
   onGameOver:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1478977034}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onGameWin:
     m_PersistentCalls:
       m_Calls: []
@@ -1737,7 +1749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -339}
+  m_AnchoredPosition: {x: 60, y: -366.65}
   m_SizeDelta: {x: 367.1262, y: 138.7136}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &586631902
@@ -2728,6 +2740,135 @@ MonoBehaviour:
   RAMType: 1
   targetRenderers:
   - {fileID: 252312017}
+--- !u!1001 &1478977033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467523770861752152, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136433839552088607, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+        type: 3}
+      propertyPath: m_Name
+      value: Canvas GameOver
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fc124c70c1c3ba4a81e8060044ada09, type: 3}
+--- !u!1 &1478977034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4136433839552088607, guid: 5fc124c70c1c3ba4a81e8060044ada09,
+    type: 3}
+  m_PrefabInstance: {fileID: 1478977033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1506223346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2834,10 +2975,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=#F00>error>low_storage_space
+  m_text: '<color=#F00>error>out_of_memory
 
-    "textures couldn''t be loaded
-    properly"</color>
+    "limited space available, textures
+    couldn''t be loaded properly"</color>
 
     controls>move(wasd)
 

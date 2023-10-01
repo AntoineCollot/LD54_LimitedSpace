@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public bool GameIsPlaying => !gameIsOver && gameHasStarted;
     public bool autoStart = true;
 
+    InputMap inputMap;
+
     public UnityEvent onGameStart = new UnityEvent();
     public UnityEvent onGameOver = new UnityEvent();
     public UnityEvent onGameWin = new UnityEvent();
@@ -29,6 +31,21 @@ public class GameManager : MonoBehaviour
             return;
         gameHasStarted = true;
         onGameStart.Invoke();
+
+        inputMap = new InputMap();
+        inputMap.Enable();
+        inputMap.Gameplay.Restart.performed += OnRestart;
+    }
+
+    private void OnDestroy()
+    {
+        inputMap.Disable();
+        inputMap.Dispose();
+    }
+
+    private void OnRestart(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        GameOver();
     }
 
     public void GameOver()

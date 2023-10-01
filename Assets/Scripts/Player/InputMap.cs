@@ -53,6 +53,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""467897c5-886c-416a-8818-4f32ee773b35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,6 +207,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""UseRAM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""354739c5-8f3b-4080-8348-9e58a9826fbd"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -209,6 +229,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_UseRAM = m_Gameplay.FindAction("UseRAM", throwIfNotFound: true);
+        m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_UseRAM;
+    private readonly InputAction m_Gameplay_Restart;
     public struct GameplayActions
     {
         private @InputMap m_Wrapper;
@@ -280,6 +302,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @UseRAM => m_Wrapper.m_Gameplay_UseRAM;
+        public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -298,6 +321,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @UseRAM.started += instance.OnUseRAM;
             @UseRAM.performed += instance.OnUseRAM;
             @UseRAM.canceled += instance.OnUseRAM;
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -311,6 +337,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @UseRAM.started -= instance.OnUseRAM;
             @UseRAM.performed -= instance.OnUseRAM;
             @UseRAM.canceled -= instance.OnUseRAM;
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -333,5 +362,6 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnUseRAM(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

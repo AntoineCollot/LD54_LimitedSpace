@@ -13,6 +13,7 @@ public class DigitBlock : MonoBehaviour
     public int digit;
     public bool isOn;
     public bool freezeValue;
+    public bool freezeOnceTurnedOn;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,9 @@ public class DigitBlock : MonoBehaviour
     {
         isOn = !isOn;
         UpdateSprites();
+
+        if (freezeOnceTurnedOn && isOn)
+            freezeValue = true;
 
         group.OnDigitUpdated(this);
     }

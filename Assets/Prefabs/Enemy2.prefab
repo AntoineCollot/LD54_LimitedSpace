@@ -308,9 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cd69ec60e9d5f42a84e2d8150efc92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RAMType: 3
+  RAMType: 4
   targetRenderers:
   - {fileID: 6347423784411050795}
+  - {fileID: 7648923474877686919}
 --- !u!1 &3001245349669412777
 GameObject:
   m_ObjectHideFlags: 0
@@ -10327,7 +10328,7 @@ MonoBehaviour:
   moveSpeed: 1
   maxSpeedChange: 100
   targetBehaviour: 1
-  attackTriggerRange: 4
+  attackTriggerRange: 5
   attackRadius: 0
   minAttackInterval: 1
   attackAnticipationDuration: 0.2

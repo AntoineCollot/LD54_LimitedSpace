@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,21 @@ public class PlayerState : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        GetComponent<Health>().onDie.AddListener(OnDie);
+        GameManager.Instance.onGameOver.AddListener(OnGameOver);
+    }
+
+    private void OnGameOver()
+    {
+        GetComponent<Health>().Die();
+    }
+
+    private void OnDie()
+    {
+        GameManager.Instance.GameOver();
     }
 }

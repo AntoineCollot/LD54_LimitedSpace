@@ -77,6 +77,9 @@ public class PlayerMovement : MonoBehaviour, IKnockbackable, IAnimable
 
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.GameIsPlaying)
+            return;
+
         if (lockMovementState.IsOn)
             desiredVelocity = Vector2.zero;
 
