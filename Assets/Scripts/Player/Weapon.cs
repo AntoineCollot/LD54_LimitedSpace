@@ -114,6 +114,8 @@ public class Weapon : MonoBehaviour
         Invoke("DelayedGenerateProjectile", 0.05f);
         lastFireTime = Time.time;
         anim.SetTrigger("Fire");
+
+        SFXManager.PlaySound(GlobalSFX.Fire);
     }
 
     void DelayedGenerateProjectile()

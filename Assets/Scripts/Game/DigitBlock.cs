@@ -42,6 +42,7 @@ public class DigitBlock : MonoBehaviour
         if (freezeOnceTurnedOn && isOn)
             freezeValue = true;
 
+        SFXManager.PlaySound(GlobalSFX.DigitSwitch);
         group.OnDigitUpdated(this);
     }
 

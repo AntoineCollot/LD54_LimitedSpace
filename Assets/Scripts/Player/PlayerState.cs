@@ -27,6 +27,7 @@ public class PlayerState : MonoBehaviour
 
     private void OnDie()
     {
+        SFXManager.PlaySound(GlobalSFX.PlayerDeath);
         GameManager.Instance.GameOver();
     }
 }

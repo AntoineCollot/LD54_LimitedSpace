@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 1f);
     }
 
     public void Fire(GameObject owner, Vector2 direction, int ignoreLayer = -1)
@@ -58,6 +58,7 @@ public class Projectile : MonoBehaviour
         }
 
         ExplosionProvider.Instance.SpawnSingleExplosion(transform.position);
+        SFXManager.PlaySound(GlobalSFX.ProjectileHit);
         //Destroy the projectile
         Destroy(gameObject);
     }

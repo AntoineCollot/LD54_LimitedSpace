@@ -19,5 +19,6 @@ public class BreakWallDoor : Door
         GetComponentInChildren<SpriteRenderer>().sprite = openWallSprite;
         GetComponentInChildren<ParticleSystem>().Play();
         Invoke("OpenDoor",1.5f);
+        SFXManager.PlaySound(GlobalSFX.WallOpen);
     }
 }

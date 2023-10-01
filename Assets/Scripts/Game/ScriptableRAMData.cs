@@ -16,7 +16,7 @@ public class ScriptableRAMData : ScriptableObject
     }
 
     [ContextMenu("Reset All")]
-    public void ResetALl()
+    public void ResetAll()
     {
         availableRAMCount = 0;
         foreach (var ramGroup in ramGroups)

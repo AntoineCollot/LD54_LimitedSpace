@@ -21,6 +21,7 @@ public class RAMPickUp : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             RAMManager.Instance.FindRAM();
+            SFXManager.PlaySound(GlobalSFX.RAMPickUp);
             Destroy(gameObject);
         }
     }

@@ -15,6 +15,7 @@ public class RestartButton : MonoBehaviour
     private void OnClick()
     {
         RAMManager.Instance.ResetRAMOfLastLevel();
+        SFXManager.PlaySound(GlobalSFX.ButtonClick);
         GetComponent<SceneLoader>().Retry();
     }
 }

@@ -35,6 +35,7 @@ public class PuzzleDoor : Door
 
         state = State.Opening;
         anim.SetBool("IsOpen", true);
+        SFXManager.PlaySound(GlobalSFX.DoorOpen);
 
         StartCoroutine(OpenAnim());
     }

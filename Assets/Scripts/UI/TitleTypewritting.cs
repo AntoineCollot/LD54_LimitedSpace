@@ -10,7 +10,7 @@ public class TitleTypewritting : MonoBehaviour
     public bool erase = true;
     public float displayDuraction = 2;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(Typewritting());
     }
@@ -25,6 +25,7 @@ public class TitleTypewritting : MonoBehaviour
         for (int i = 1; i <= text.text.Length; i++)
         {
             text.maxVisibleCharacters = i;
+            SFXManager.PlaySound(GlobalSFX.Typewritting);
 
             yield return new WaitForSeconds(timePerChar);
         }
@@ -39,5 +40,7 @@ public class TitleTypewritting : MonoBehaviour
             text.maxVisibleCharacters = i;
             yield return new WaitForSeconds(timePerChar / 3);
         }
+
+        gameObject.SetActive(false);
     }
 }

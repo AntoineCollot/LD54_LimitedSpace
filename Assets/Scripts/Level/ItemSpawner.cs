@@ -47,6 +47,7 @@ public class ItemSpawner : MonoBehaviour
 
     void SpawnItems()
     {
+        bool playedSFX = false;
         for (int i = itemsToSpawn.Count - 1; i >= 0; i--)
         {
             if (Vector2.Distance(PlayerState.Instance.CenterOfMass, itemsToSpawn[i].transform.position) >= MIN_DIST_TO_PLAYER)
@@ -57,6 +58,12 @@ public class ItemSpawner : MonoBehaviour
                 fx.transform.position = itemsToSpawn[i].transform.position;
 
                 itemsToSpawn.RemoveAt(i);
+
+                if(!playedSFX)
+                {
+                    playedSFX = true;
+                    SFXManager.PlaySound(GlobalSFX.ItemSpawn);
+                }
             }
         }
     }

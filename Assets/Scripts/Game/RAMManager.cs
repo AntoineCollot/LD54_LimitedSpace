@@ -26,6 +26,8 @@ public class RAMManager : MonoBehaviour
     List<RAMGroup> unlockedGroupOfLastLevel = new List<RAMGroup>();
     int availableRAMCountAtLevelStart;
 
+    public bool unlockEverything = false;
+
     public static RAMManager Instance;
 
     private void Awake()
@@ -42,6 +44,15 @@ public class RAMManager : MonoBehaviour
         Time.timeScale = 1;
 
         availableRAMCountAtLevelStart = ramData.availableRAMCount;
+
+        //for disk2
+        if(unlockEverything)
+        {
+            foreach (RAMGroup group in ramData.ramGroups)
+            {
+                SetState(group, RAMState.Unlocked);
+            }
+        }
 
         InitMaterials();
     }
@@ -68,6 +79,16 @@ public class RAMManager : MonoBehaviour
     {
         //Detect item hovered by cursor
         Vector2 mousePos = Mouse.current.position.ReadValue();
+
+        //Edge case for options
+        if(mousePos.x>Screen.width * 0.9f && mousePos.y > Screen.height * 0.9f)
+        {
+            RAMGroup group = ramData.GetRAMGroup(RAMType.Options);
+
+            RAMModeProcessGroup(group, useRAM);
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
         //Try items first
@@ -83,7 +104,6 @@ public class RAMManager : MonoBehaviour
         //if something is hovered
         if(hit.collider !=null)
         {
-           Debug.Log("hover " + hit.collider.name);
             //Find the group the cursor is hovering
             RAMInteractable interactable = hit.collider.GetComponentInParent<RAMInteractable>();
             if (interactable == null)
@@ -94,26 +114,9 @@ public class RAMManager : MonoBehaviour
             }
 
             RAMGroup group = ramData.GetRAMGroup(interactable.RAMType);
-           Debug.Log("INteractable " + interactable.RAMType);
 
-            //Process click
-            if(useRAM)
-            {
-                if (UseRAM(group))
-                {
-                    ExitRAMMode();
-                    return;
-                }
-            }
-            //Process hover
-            if (hoveredGroup == group)
+            if (RAMModeProcessGroup(group, useRAM))
                 return;
-
-            //Reset the state of previous hovered group (can't change unlocked state anyway)
-            SetState(hoveredGroup,RAMState.Locked);
-            hoveredGroup = group;
-            //Hover the new group
-            SetState(hoveredGroup,RAMState.Hovered);
         }
         else
         {
@@ -123,6 +126,35 @@ public class RAMManager : MonoBehaviour
 
         if (useRAM)
             ExitRAMMode();
+    }
+
+    //the return is if we should return the parent method as well
+    bool RAMModeProcessGroup(RAMGroup group, bool useRAM)
+    {
+        //Process click
+        if (useRAM)
+        {
+            if (UseRAM(group))
+            {
+                ExitRAMMode();
+                return true;
+            }
+        }
+        //Process hover
+        if (hoveredGroup == group)
+            return true;
+
+        //Reset the state of previous hovered group (can't change unlocked state anyway)
+        SetState(hoveredGroup, RAMState.Locked);
+        if (group.state != RAMState.Unlocked)
+        {
+            hoveredGroup = group;
+            //Hover the new group
+            SetState(hoveredGroup, RAMState.Hovered);
+            SFXManager.PlaySound(GlobalSFX.RAMHover);
+        }
+
+        return false;
     }
 
     public RAMState GetState(RAMType type)
@@ -152,14 +184,14 @@ public class RAMManager : MonoBehaviour
 
         if(state==RAMState.Unlocked)
             unlockedGroupOfLastLevel.Add(group);
-        onRAMStateChanged.Invoke(group.type, state);
+        onRAMStateChanged?.Invoke(group.type, state);
         return true;
     }
 
     public void FindRAM()
     {
         ramData.availableRAMCount++;
-        onRAMCountChanged.Invoke(RAMCount);
+        onRAMCountChanged?.Invoke(RAMCount);
     }
 
     public void EnterRAMMode()
@@ -168,7 +200,9 @@ public class RAMManager : MonoBehaviour
             return;
         isInRAMMode = true;
         Time.timeScale = 0;
-        onRAMModeEnabled.Invoke(true);
+        onRAMModeEnabled?.Invoke(true);
+
+        SFXManager.PlaySound(GlobalSFX.RAMModeEnter);
         return;
     }
 
@@ -178,8 +212,10 @@ public class RAMManager : MonoBehaviour
             return;
         isInRAMMode = false;
         Time.timeScale = 1;
-        onRAMModeEnabled.Invoke(false);
+        onRAMModeEnabled?.Invoke(false);
         ResetAllHoveredStates();
+
+        SFXManager.PlaySound(GlobalSFX.RAMModeExit);
     }
 
     public bool UseRAM(RAMGroup group)
@@ -190,7 +226,8 @@ public class RAMManager : MonoBehaviour
         if (SetState(group.type, RAMState.Unlocked))
         {
             ramData.availableRAMCount--;
-            onRAMCountChanged.Invoke(RAMCount);
+            onRAMCountChanged?.Invoke(RAMCount);
+            SFXManager.PlaySound(GlobalSFX.RAMUse);
 
             return true;
         }
@@ -205,6 +242,11 @@ public class RAMManager : MonoBehaviour
             //Set all states as locked, as by default unlocked state doesn't allow to be changed
             SetState(group, RAMState.Locked);
         }
+    }
+
+    public void ResetAll()
+    {
+        ramData.ResetAll();
     }
 
     public void ResetRAMOfLastLevel()
@@ -225,7 +267,7 @@ public class RAMManager : MonoBehaviour
     {
         foreach (RAMGroup group in ramData.ramGroups)
         {
-            onRAMStateChanged.Invoke(group.type, group.state);
+            onRAMStateChanged?.Invoke(group.type, group.state);
         }
     }
 #endif
@@ -276,6 +318,7 @@ public enum RAMType
     NPC,
     DigitBlock,
     FX,
+    Options
 }
 
 public enum RAMState { Locked, Hovered, Unlocked }

@@ -45,6 +45,7 @@ public class EnemyAI : MonoBehaviour
 
         health = GetComponent<Health>();
         health.onDie.AddListener(OnDie);
+        health.onHit.AddListener(OnHit);
         body = GetComponent<Rigidbody2D>();
     }
     private void OnEnable()
@@ -69,8 +70,8 @@ public class EnemyAI : MonoBehaviour
                 targetPosition = PlayerState.Instance.CenterOfMass;
                 break;
             case TargetBehaviour.AimAtMaxRange:
-                Vector3 fromPlayer = transform.position - PlayerState.Instance.CenterOfMass;
-                targetPosition = fromPlayer.normalized * attackTriggerRange;
+                Vector2 fromPlayer = transform.position - PlayerState.Instance.CenterOfMass;
+                targetPosition = (Vector2)PlayerState.Instance.CenterOfMass +(fromPlayer.normalized * (attackTriggerRange-0.5f));
                 break;
         }
 
@@ -122,7 +123,16 @@ public class EnemyAI : MonoBehaviour
     protected void OnDie()
     {
         enabled = false;
+
+        SFXManager.PlaySound(GlobalSFX.EnemyKilled);
     }
+
+    protected void OnHit()
+    {
+        SFXManager.PlaySound(GlobalSFX.EnemyDamaged);
+        isTracking = true;
+    }
+
 
     protected void ComputeDesiredVelocity()
     {
@@ -179,6 +189,7 @@ public class EnemyAI : MonoBehaviour
             return;
 
         lastAttackTime = Time.time;
+        SFXManager.PlaySound(GlobalSFX.EnemyAttack);
         CustomAttack();
     }
 
@@ -203,6 +214,7 @@ public class EnemyAI : MonoBehaviour
             if (hit.attachedRigidbody.TryGetComponent(out Health health))
                 health.Hit(1);
         }
+        SFXManager.PlaySound(GlobalSFX.Explosion);
 
         yield return new WaitForSeconds(attackDuration- attackAnticipationDuration);
 

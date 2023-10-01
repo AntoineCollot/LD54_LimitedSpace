@@ -35,7 +35,11 @@ public class SFXManager : MonoBehaviour
     [HideInInspector] public float lastSFXTime;
     public const float MIN_SFX_INTERVAL = 0.1f;
 
-    AudioSource audioSource = null;
+    AudioSource sfxSource = null;
+    public AudioSource musicSource;
+
+    public static bool muteSFX = false;
+    public static bool muteMusic = false;
 
     public static SFXManager Instance;
 
@@ -48,24 +52,43 @@ public class SFXManager : MonoBehaviour
             return;
         }
         Instance = this;
-        audioSource = GetComponent<AudioSource>();
+        sfxSource = GetComponent<AudioSource>();
+        DontDestroyOnLoad(gameObject);
+
+        //Mute
+        sfxSource.mute = muteSFX;
+        if(musicSource!=null)
+            musicSource.mute = muteMusic;
+    }
+
+    public static void MuteSFX(bool value)
+    {
+        muteSFX = value;
+        Instance.sfxSource.mute = muteSFX;
+    }
+
+    public static void MuteMusic(bool value)
+    {
+        muteMusic = value;
+        if (Instance.musicSource != null)
+            Instance.musicSource.mute = muteMusic;
     }
 
     public static void PlaySound(GlobalSFX sfx)
     {
-        if (Instance == null || (Instance.lastSFX == sfx && Time.time - Instance.lastSFXTime < MIN_SFX_INTERVAL))
+        if (Instance == null || (Instance.lastSFX == sfx && Time.unscaledTime - Instance.lastSFXTime < MIN_SFX_INTERVAL))
             return;
 
         PlaySound((int)sfx);
         Instance.lastSFX = sfx;
-        Instance.lastSFXTime = Time.time;
+        Instance.lastSFXTime = Time.unscaledTime;
     }
 
     public static void PlaySound(int id)
     {
         if (Instance == null)
             return;
-        Instance.audioSource.PlayOneShot(Instance.bank.clips[id], Instance.bank.volumes[id]);
+        Instance.sfxSource.PlayOneShot(Instance.bank.clips[id], Instance.bank.volumes[id]);
     }
 }
 
