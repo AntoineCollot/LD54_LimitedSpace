@@ -20,14 +20,14 @@ MonoBehaviour:
     - {fileID: 2100000, guid: 6e9eceb9369b52b4db73b1758905605f, type: 2}
     - {fileID: 2100000, guid: bdbfcc0653bd7974db14fec60b7817a5, type: 2}
   - type: 1
-    state: 2
+    state: 0
     materials:
     - {fileID: 2100000, guid: 7ebcfee87ee59014da92aa51d934a1a0, type: 2}
   - type: 2
     state: 0
     materials: []
   - type: 3
-    state: 2
+    state: 0
     materials: []
   - type: 4
     state: 0
